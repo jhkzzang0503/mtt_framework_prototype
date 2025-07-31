@@ -1,0 +1,49 @@
+{
+  "project_name": "mtt_framework_prototype",
+  "description": "드래그 앤 드롭 기반의 UI 빌더 프로토타입. 사용자가 모듈을 캔버스로 끌어다 놓아 동적으로 UI를 구성하고, 레이아웃을 저장/로드할 수 있습니다.",
+  "core_features": [
+    {
+      "feature_id": "F001",
+      "feature_name": "UI 빌더 기본 구조",
+      "description": "사이드바, 빌더 캔버스, 헤더, 푸터로 구성된 기본 레이아웃",
+      "status": "완료"
+    },
+    {
+      "feature_id": "F002",
+      "feature_name": "드래그 앤 드롭 기능",
+      "description": "사이드바의 모듈을 캔버스로 드래그 앤 드롭하여 추가하는 기능",
+      "status": "완료"
+    },
+    {
+      "feature_id": "F003",
+      "feature_name": "상태 관리 (Zustand)",
+      "description": "컴포넌트 상태를 Zustand 라이브러리를 사용하여 전역으로 관리",
+      "status": "완료"
+    },
+    {
+      "feature_id": "F004",
+      "feature_name": "레이아웃 순서 변경",
+      "description": "캔버스 내의 모듈들 순서를 드래그하여 변경하는 기능",
+      "status": "완료"
+    },
+    {
+      "feature_id": "F005",
+      "feature_name": "레이아웃 영속성 (LocalStorage)",
+      "description": "현재 캔버스 레이아웃을 브라우저의 LocalStorage에 저장하고, 새로고침 시 복원하는 기능",
+      "status": "완료"
+    }
+  ],
+  "common_modules": [
+    {
+      "module_name": "commonModule",
+      "file_path": "src/utils/commonModule.js",
+      "functions": [
+        {
+          "function_name": "generateUniqueId",
+          "description": "고유한 ID를 생성하는 함수. 현재 시간의 타임스탬프와 랜덤 숫자를 조합하여 생성합니다.",
+          "usage_example": "import { generateUniqueId } from '../utils/commonModule.js';"
+        }
+      ]
+    }
+  ]
+}

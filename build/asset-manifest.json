@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mtt_framework_prototype/static/css/main.a15f42c3.css",
+    "main.js": "/mtt_framework_prototype/static/js/main.f6b02e36.js",
+    "index.html": "/mtt_framework_prototype/index.html",
+    "main.a15f42c3.css.map": "/mtt_framework_prototype/static/css/main.a15f42c3.css.map",
+    "main.f6b02e36.js.map": "/mtt_framework_prototype/static/js/main.f6b02e36.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a15f42c3.css",
+    "static/js/main.f6b02e36.js"
+  ]
+}
