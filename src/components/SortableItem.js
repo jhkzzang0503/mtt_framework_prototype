@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import './SortableItem.css';
 
 function SortableItem({ id, children, isSelected, onClick }) {
   const {

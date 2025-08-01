@@ -1,3 +1,5 @@
+/* src/App.css */
+
 .App {
   text-align: center;
   height: 100%;
@@ -22,9 +24,78 @@
   flex-grow: 1; /* Allow this area to grow and fill available space */
 }
 
-.canvas-area {
+/* Builder Canvas Styles */
+.builder-canvas {
   flex: 1;
   padding: 20px;
-  border-left: 1px solid #ccc;
-  min-height: 80vh; /* This might be redundant now, but harmless */
+  border-left: 1px solid #ccc; /* 이 스타일이 인라인으로 오버라이드될 수 있으므로 주의 */
+  min-height: 80vh;
+  background-color: #f8f8f8; /* 이 스타일이 인라인으로 오버라이드될 수 있으므로 주의 */
+  box-sizing: border-box;
+
+  /* 드롭 영역 시각화를 위한 초기 테두리 */
+  border: 1px dashed #a0a0a0; /* 이 스타일도 인라인으로 오버라이드될 수 있으므로 주의 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+/* Sortable Item Styles */
+.sortable-item {
+  width: 100%; /* SortableItem이 builder-canvas의 너비를 채우도록 */
+  max-width: 600px; /* 너무 넓어지지 않도록 최대 너비 설정 (선택 사항) */
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* 약간의 그림자 추가 */
+}
+
+.sortable-item:hover {
+  border-color: #a0a0a0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Draggable Module Styles (Sidebar items) */
+.draggable-module {
+  width: calc(100% - 16px); /* 사이드바 패딩 고려하여 너비 조정 */
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  text-align: center;
+  cursor: grab; /* 드래그 가능임을 나타내는 커서 */
+  transition: background-color 0.2s ease-in-out;
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+  display: flex; /* 내부 텍스트 중앙 정렬 */
+  align-items: center;
+  justify-content: center;
+  min-height: 40px; /* 최소 높이 설정 */
+}
+
+.draggable-module:hover {
+  background-color: #e9e9e9;
+}
+
+/* Canvas Placeholder Styles */
+.canvas-placeholder {
+  flex-grow: 1; /* 캔버스 영역에서 남은 공간을 모두 차지하도록 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100%; 제거 - flex-grow로 대체 */
+  border: 2px dashed #a0a0a0; /* builder-canvas와 일관되게 색상 변경 */
+  border-radius: 8px;
+  color: #888;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 20px; /* builder-canvas 내부에서 여백을 줍니다. */
 }
