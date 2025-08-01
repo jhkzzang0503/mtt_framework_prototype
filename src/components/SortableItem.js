@@ -24,16 +24,16 @@ function SortableItem({ id, children, isSelected, onClick }) {
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners} // 이 리스너들을 통해 dnd-kit이 드래그 이벤트를 감지합니다.
-      onClick={onClick}
-      className="sortable-item"
-    >
-      {children}
-    </div>
+      <div
+          ref={setNodeRef}
+          style={style}
+          {...attributes}
+          {...listeners} // 이 리스너들을 통해 dnd-kit이 드래그 이벤트를 감지합니다.
+          onClick={onClick}
+          className="sortable-item"
+      >
+        {children}
+      </div>
   );
 }
 
