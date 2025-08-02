@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import BuilderCanvas from './components/BuilderCanvas';
 import Footer from './components/Footer';
-import TestForm from '@/components/modules/tryjyj'
+import TestForm from '@/components/modules/testTemplate'
 
 import { DndContext, rectIntersection, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import useBuilderStore from './store';
