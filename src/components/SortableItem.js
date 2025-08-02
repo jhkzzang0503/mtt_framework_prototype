@@ -2,7 +2,8 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-function SortableItem({ id, children, isSelected, onClick }) {
+// [수정] props에 onDelete 추가
+function SortableItem({ id, children, isSelected, onClick, onDelete }) {
   const {
     attributes,
     listeners,
@@ -12,15 +13,20 @@ function SortableItem({ id, children, isSelected, onClick }) {
     isDragging,
   } = useSortable({ id });
 
-  // @dnd-kit의 transform과 transition을 CSS 스타일로 변환합니다.
-  // 이를 통해 부드러운 정렬 애니메이션이 구현됩니다.
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
     border: isSelected ? '2px solid #4A90E2' : '1px solid #ddd',
     boxShadow: isSelected ? '0 0 5px rgba(74, 144, 226, 0.5)' : 'none',
-    cursor: 'pointer', // Add a pointer cursor to indicate it's clickable
+    cursor: 'pointer',
+  };
+
+  // [추가] 삭제 버튼 클릭 핸들러
+  const handleDeleteClick = (e) => {
+    // 이벤트 버블링을 막아 부모의 onClick이 실행되지 않도록 함
+    e.stopPropagation();
+    onDelete(id);
   };
 
   return (
@@ -28,11 +34,16 @@ function SortableItem({ id, children, isSelected, onClick }) {
           ref={setNodeRef}
           style={style}
           {...attributes}
-          {...listeners} // 이 리스너들을 통해 dnd-kit이 드래그 이벤트를 감지합니다.
+          {...listeners}
           onClick={onClick}
-          className="sortable-item"
+          className="sortable-item" // 이 클래스에 position: relative가 필요합니다.
       >
         {children}
+        {isSelected && ( // isSelected가 true일 때만 X 버튼 렌더링
+            <button className="delete-item-btn" onClick={handleDeleteClick}>
+              X
+            </button>
+        )}
       </div>
   );
 }

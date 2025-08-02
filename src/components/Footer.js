@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Footer() {
-  return (
-    <footer className="footer mt-auto py-3 bg-light">
-      <div className="container text-center">
-        <span className="text-muted">© 2024 MTT Framework Prototype. All rights reserved.</span>
-      </div>
-    </footer>
-  );
+function Footer({ style, className }) {
+    return (
+        <footer style={style} className={`modern-footer ${className || ''}`}>
+            <div className="container">
+                <span>© 2025 mtt-framework-prototype. All rights reserved.</span>
+            </div>
+        </footer>
+    );
 }
 
 export default Footer;

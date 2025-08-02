@@ -1,105 +1,671 @@
-/* src/App.css */
+/* =============================================== */
+/* 0. 글로벌 & 앱 레이아웃
+/* =============================================== */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Fira+Code&display=swap');
 
-.App {
-  text-align: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+body {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa; /* 전체 페이지에 밝은 회색 배경 적용 */
+  color: #212529;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* App 컴포넌트의 d-flex flex-column min-vh-100에 맞도록 추가 */
+#root, html, body, .App {
+  height: 100%; /* HTML, body, root, App이 모두 100% 높이를 갖도록 */
 }
 
 .main-content {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  align-items: flex-start; /* << 이 속성을 추가하세요 */
+  /* overflow: hidden; */ /* 불필요한 스크롤바 방지 - 현재는 Bootstrap row에 맡김 */
+  /* Bootstrap row 클래스가 display:flex를 이미 가지고 있으므로 충돌 방지를 위해 주석 처리 */
+  /* flex-grow-1은 App.js에서 클래스로 이미 적용되어 있습니다. */
 }
 
-/* Builder Canvas Styles */
-.builder-canvas {
-  flex: 1 1;
-  padding: 20px;
-  border-left: 1px solid #ccc;
-  min-height: 80vh;
-  background-color: #f8f8f8;
-  box-sizing: border-box;
-  border: 1px dashed #a0a0a0;
+
+/* =============================================== */
+/* 1. 모듈 스타일 편집기 (ModulesSet.jsx)
+/* =============================================== */
+.style-editor-panel {
+  /* width: 320px; */ /* Bootstrap col-md-2가 너비를 담당하므로 고정 너비 제거 */
+  /* flex-shrink: 0; */ /* Bootstrap col-md-*는 기본적으로 flex-shrink:0에 가깝게 동작함 */
+  background-color: #f7f9fc;
+  padding: 24px;
+  /* border-left: 1px solid #e6e9f0; */ /* BuilderCanvas.js에서 border-start 클래스를 사용하도록 변경 */
+  height: 100%; /* 부모 col-md-2의 높이를 채우도록 */
   display: flex;
   flex-direction: column;
-  /* 'center'에서 'stretch'로 변경 */
-  align-items: stretch;
-  justify-content: flex-start;
+  gap: 20px; /* 요소 간 간격 */
+  overflow-y: auto; /* 내용이 많아지면 스크롤되도록 */
+}
+
+.style-editor-panel h2,
+.style-editor-panel h3 {
+  font-family: 'Pretendard', sans-serif; /* 깔끔한 산세리프 폰트 */
+  color: #2c3e50;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e6e9f0;
+}
+
+.style-editor-panel h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.style-editor-panel h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #34495e;
+  margin-top: 10px;
+}
+
+.style-editor-panel .form-group {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+}
+
+.style-editor-panel label {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.style-editor-panel input[type="text"],
+.style-editor-panel textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce1e8;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-family: 'Fira Code', 'Consolas', monospace; /* 코딩용 폰트 */
+  font-size: 0.9em;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.style-editor-panel input[type="text"]:focus,
+.style-editor-panel textarea:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+/* =============================================== */
+/* 2. 카페 게시판 (CafeBoard.js)
+/* =============================================== */
+.cafe-board-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* 테이블 radius 적용을 위해 */
+}
+
+.cafe-board-container .table {
+  border-collapse: separate; /* 셀 간 간격 */
+  border-spacing: 0;
+  width: 100%;
+}
+
+.cafe-board-container thead th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6 !important;
+  border-top: none;
+  padding: 15px;
+  text-align: center;
+}
+
+.cafe-board-container tbody tr {
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.cafe-board-container tbody tr:hover {
+  background-color: #f1f3f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.cafe-board-container tbody td {
+  padding: 15px;
+  vertical-align: middle;
+  border-top: 1px solid #f1f1f1 !important;
+}
+
+.cafe-board-container tbody td:first-child {
+  font-weight: 500;
+  color: #212529;
+}
+
+/* =============================================== */
+/* 3. 인스타그램 스토리 (InstagramStoryList.js) - [수정됨]
+/* =============================================== */
+.insta-story-container {
+  /* [수정] 수평 스크롤 관련 속성 제거하고, 부트스트랩 row에 맞춰 패딩 조정 */
+  padding: 10px;
+}
+
+.insta-story-card {
+  /* [수정] 고정 너비(flex-basis) 제거, 너비를 100%로 설정하여 부모 컬럼을 채움 */
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.insta-story-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.insta-story-card .story-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.insta-story-card:hover .story-image {
+  transform: scale(1.1);
+}
+
+.insta-story-card .story-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+}
+
+.insta-story-card .story-profile {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  padding: 2px;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.insta-story-card .story-profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.insta-story-card .story-title {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  color: white;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* =============================================== */
+/* 4. 사이드바 (Sidebar.js) - [수정됨]
+/* =============================================== */
+.sidebar-panel {
+  /* [수정] 고정 너비 속성 제거 */
+  /* width: 320px; */ /* Bootstrap col-md-3가 너비를 담당하므로 고정 너비 제거 */
+  /* flex-shrink: 0; */ /* Bootstrap col-md-*는 기본적으로 flex-shrink:0에 가깝게 동작함 */
+
+  background-color: #ffffff;
+  padding: 24px;
+  /* border-right: 1px solid #e6e9f0; */ /* App.js에서 border-end 클래스를 사용하도록 변경 */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%; /* 부모 col-md-3의 높이를 채우도록 */
   overflow-y: auto;
 }
 
-.sidebar {
-  width:30%
+.sidebar-category-title {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #2c3e50;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e6e9f0;
+  margin-bottom: 16px;
 }
 
-/* Sortable Item Styles */
-.sortable-item {
-  width: 100%; /* SortableItem이 builder-canvas의 너비를 채우도록 */
-  /* max-width: 600px; /* 너무 넓어지지 않도록 최대 너비 설정 (선택 사항) */
-  padding: 10px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.module-grid {
+  display: grid;
+  /* [수정] 화면 크기에 따라 유연하게 컬럼 수가 바뀌도록 수정 */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+/* DraggableModule의 기본 스타일을 리셋하여 그리드 레이아웃을 방해하지 않도록 함 */
+.sidebar-panel .draggable-module {
+  all: unset; /* 모든 상속된 스타일 초기화 */
+  display: block; /* 블록 요소로 만듦 */
+}
+
+.module-preview-card {
+  background-color: #fdfdfd;
+  border: 1px solid #e6e9f0;
+  border-radius: 12px;
+  cursor: grab;
   transition: all 0.2s ease-in-out;
+  overflow: hidden;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* 약간의 그림자 추가 */
+  aspect-ratio: 1 / 1; /* 1:1 비율로 정사각형 만들기 */
+  display: flex;
+  flex-direction: column; /* 제목을 아래에 배치하기 위함 */
 }
 
-.sortable-item:hover {
-  border-color: #a0a0a0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.module-preview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  border-color: #4A90E2;
 }
 
-/* Draggable Module Styles (Sidebar items) */
-.draggable-module {
-  width: calc(100% - 16px); /* 사이드바 패딩 고려하여 너비 조정 */
-  padding: 10px;
-  margin-bottom: 8px;
-  background-color: #f0f0f0;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+.module-preview-card .preview-content-wrapper {
+  flex-grow: 1; /* 제목을 제외한 모든 공간 차지 */
+  overflow: hidden; /* 스케일링된 콘텐츠를 잘라냄 */
+  position: relative;
+  background-color: #fff;
+}
+
+.module-preview-card .preview-content {
+  /* 스케일링의 기준점이 되는 래퍼 */
+  width: 100%;
+  height: 100%;
+  transform: scale(0.32); /* 축소 비율은 유지 */
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.module-preview-card .preview-content > * {
+  /* 컴포넌트가 렌더링될 '가상 캔버스'의 크기를 정의 */
+  width: 312.5%; /* 100% / 0.32 = 312.5% */
+  height: 312.5%;
+  transform: scale(1); /* 내부 스케일링은 초기화 */
+  transform-origin: top left;
+}
+
+
+.module-preview-card .preview-title {
+  background: rgba(44, 62, 80, 0.8);
+  color: white;
+  font-size: 0.85em;
+  font-weight: 500;
   text-align: center;
-  cursor: grab; /* 드래그 가능임을 나타내는 커서 */
-  transition: background-color 0.2s ease-in-out;
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
-  display: flex; /* 내부 텍스트 중앙 정렬 */
+  padding: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  flex-shrink: 0; /* 제목 영역은 줄어들지 않도록 */
+}
+
+/* =============================================== */
+/* 5. 헤더 & 푸터 (Header.js, Footer.js etc.)
+/* =============================================== */
+
+/* --- 빌더 유틸리티 헤더 --- */
+.builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e6e9f0;
+  flex-shrink: 0; /* 헤더 높이가 줄어들지 않도록 */
+}
+
+.builder-header h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.builder-header .button-group {
+  display: flex;
+  gap: 12px;
+}
+
+.builder-header .btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.builder-header .btn-primary {
+  background-color: #4A90E2;
+  color: white;
+}
+.builder-header .btn-primary:hover {
+  background-color: #3a7ac8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.2);
+}
+
+.builder-header .btn-secondary {
+  background-color: #e6e9f0;
+  color: #555;
+}
+.builder-header .btn-secondary:hover {
+  background-color: #dce1e8;
+}
+
+
+/* --- 모던 헤더 타입 1 --- */
+.modern-header-type1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background-color: #fff;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.modern-header-type1 .header-nav a {
+  margin-right: 24px;
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+}
+.modern-header-type1 .header-nav a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4A90E2;
+  transition: width 0.3s ease;
+}
+.modern-header-type1 .header-nav a:hover:after {
+  width: 100%;
+}
+.modern-header-type1 .header-nav a:hover {
+  color: #2c3e50;
+}
+
+.modern-header-type1 .search-box {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid #e6e9f0;
+  min-width: 250px;
+  transition: all 0.2s ease;
+}
+.modern-header-type1 .search-box:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+/* --- 모던 헤더 타입 2 --- */
+.modern-header-type2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.modern-header-type2 .header-logo {
+  font-size: 2em;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.modern-header-type2 .header-nav {
+  display: flex;
+  gap: 32px;
+}
+.modern-header-type2 .header-nav a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.modern-header-type2 .header-nav a:hover {
+  color: #4A90E2;
+}
+
+/* --- 모던 푸터 --- */
+.modern-footer {
+  padding: 50px 40px;
+  background-color: #2c3e50; /* 어두운 배경 */
+  color: #bdc3c7; /* 밝은 회색 텍스트 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  flex-shrink: 0; /* 푸터 높이가 줄어들지 않도록 */
+}
+
+.modern-footer .footer-content {
+  width: 100%;
+  max-width: 1200px; /* 콘텐츠 최대 너비 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+  gap: 20px;
+}
+
+.modern-footer .footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.modern-footer .footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.modern-footer .footer-links a:hover {
+  color: #ffffff;
+}
+
+.modern-footer .footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.modern-footer .footer-social a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 1.2em;
+  width: 40px;
+  height: 40px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px; /* 최소 높이 설정 */
+  border: 1px solid #34495e;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.draggable-module:hover {
-  background-color: #e9e9e9;
+.modern-footer .footer-social a:hover {
+  color: #ffffff;
+  background-color: #4A90E2;
+  border-color: #4A90E2;
+  transform: translateY(-3px);
 }
 
-/* Canvas Placeholder Styles */
-.canvas-placeholder {
-  flex-grow: 1; /* 캔버스 영역에서 남은 공간을 모두 차지하도록 */
+.modern-footer .footer-bottom {
+  width: 100%;
+  max-width: 1200px;
+  padding-top: 30px;
+  border-top: 1px solid #34495e;
+  text-align: center;
+  font-size: 0.9em;
+  color: #7f8c8d; /* 저작권 표시는 더 흐리게 */
+}
+
+/* '생성' 버튼 스타일 */
+.generate-btn {
+  margin-top: auto;
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  z-index: 10; /* 다른 요소 위에 오도록 z-index 설정 */
+}
+
+.generate-btn:hover {
+  background-color: #3a7ac8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.2);
+}
+
+/* 모달 오버레이 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100%; 제거 - flex-grow로 대체 */
-  border: 2px dashed #a0a0a0; /* builder-canvas와 일관되게 색상 변경 */
-  border-radius: 8px;
-  color: #888;
-  font-size: 1.2em;
-  text-align: center;
+  z-index: 1000; /* 가장 위에 오도록 높은 z-index 설정 */
+}
+
+/* 모달 콘텐츠 스타일 */
+.modal-content {
+  background-color: white;
+  color: black;
   padding: 20px;
-  box-sizing: border-box;
-  margin: 20px; /* builder-canvas 내부에서 여백을 줍니다. */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* 모달 최대 너비 설정 */
+  width: 90%; /* 작은 화면에서 유동적으로 조절 */
+}
+
+/* 모달 입력 필드 스타일 */
+.modal-input {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box; /* padding이 width에 포함되도록 */
+  font-size: 1em;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+/* 모달 버튼 그룹 스타일 */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* 버튼 간 간격 */
+  margin-top: 15px; /* 입력 필드와의 간격 */
+}
+
+/* 모달 버튼 기본 스타일 (Bootstrap btn 클래스와 유사하게) */
+.modal-actions .btn {
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-actions .modal-btn-cancel {
+  background-color: #eee;
+  color: #333;
+}
+
+.modal-actions .modal-btn-cancel:hover {
+  background-color: #ddd;
+}
+
+.modal-actions .modal-btn-generate {
+  background-color: #4A90E2;
+  color: white;
+}
+
+.modal-actions .modal-btn-generate:hover {
+  background-color: #3a7ac8;
+}
+
+.canvas-placeholder {
+  display: flex; /* Flexbox 컨테이너로 설정 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100%; /* 부모 높이를 꽉 채우도록 설정 */
+  width: 100%; /* 부모 너비를 꽉 채우도록 설정 */
+  color: #888; /* 텍스트 색상 조정 (선택 사항) */
+  font-size: 1.2em; /* 텍스트 크기 조정 (선택 사항) */
+  text-align: center; /* 텍스트 정렬 (선택 사항) */
+  border: 2px dashed #e6e9f0; /* 테두리 추가 (선택 사항) */
+  border-radius: 8px; /* 테두리 모서리 둥글게 (선택 사항) */
+}
+
+.canvas-placeholder p {
+  margin: 0; /* p 태그의 기본 마진 제거 */
+  padding: 15px; /* 내부 여백 추가 */
+}
+
+.delete-item-btn {
+  position: absolute;
+  top: -10px; /* 아이템 상단에서 약간 위로 */
+  right: -10px; /* 아이템 우측에서 약간 밖으로 */
+  background-color: #dc3545; /* 빨간색 배경 */
+  color: white;
+  border: none;
+  border-radius: 50%; /* 원형 버튼 */
+  width: 24px; /* 버튼 크기 */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10; /* 다른 요소 위에 오도록 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.delete-item-btn:hover {
+  background-color: #c82333; /* 호버 시 더 진한 빨간색 */
+  transform: scale(1.1); /* 호버 시 약간 확대 */
+}
+
+/* sortable-item 클래스에 position: relative가 중요합니다. */
+.sortable-item {
+  position: relative; /* 자식인 delete-item-btn의 absolute 포지셔닝 기준 */
+  /* ... 기존 sortable-item 스타일 유지 ... */
 }

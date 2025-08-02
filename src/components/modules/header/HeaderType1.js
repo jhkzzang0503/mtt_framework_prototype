@@ -1,18 +1,18 @@
 import React from 'react';
 
-const HeaderType1 = () => {
-  return (
-    <header style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
-      <nav style={{ display: 'flex' }}>
-        <a href="#" style={{ marginRight: '1rem', color: 'black' }}>홈</a>
-        <a href="#" style={{ marginRight: '1rem', color: 'black' }}>뉴스</a>
-        <a href="#" style={{ marginRight: '1rem', color: 'black' }}>메일</a>
-        <a href="#" style={{ marginRight: '1rem', color: 'black' }}>카페</a>
-        <a href="#" style={{ color: 'black' }}>블로그</a>
-      </nav>
-      <input type="text" placeholder="검색" style={{ padding: '0.5rem', border: '1px solid #ccc' }} />
-    </header>
-  );
+const HeaderType1 = ({ style, className }) => {
+    return (
+        <header style={style} className={`modern-header-type1 ${className || ''}`}>
+            <nav className="header-nav">
+                <a href="#">홈</a>
+                <a href="#">뉴스</a>
+                <a href="#">메일</a>
+                <a href="#">카페</a>
+                <a href="#">블로그</a>
+            </nav>
+            <input type="text" placeholder="검색어를 입력하세요..." className="search-box" />
+        </header>
+    );
 };
 
 export default HeaderType1;

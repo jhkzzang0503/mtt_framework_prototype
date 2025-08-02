@@ -1,13 +1,12 @@
-// src/store.js
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { v4 as uuidv4 } from 'uuid';
+import { produce } from 'immer';
 
 const useBuilderStore = create(immer((set, get) => ({
   items: [],
   selectedItemId: null,
 
-  // addItem 함수가 { type, renderedComponent } 객체를 인자로 받도록 수정
   addItem: ({ type, renderedComponent }) => // sourceCode는 더 이상 필요없을 수 있음
       set((state) => {
         const newItem = {
@@ -18,39 +17,14 @@ const useBuilderStore = create(immer((set, get) => ({
           style: { padding: '10px', margin: '5px' },
           renderedComponent: renderedComponent, // getModules에서 온 JSX 엘리먼트 저장
         };
-
-        switch (type.split('/').pop()) { // type에서 마지막 이름 추출하여 스위치
-          case 'HeaderComponent':
-            newItem.properties.text = 'Header Text'; // HeaderComponent가 렌더링할 텍스트
-            break;
-          case 'HeaderType1':
-            newItem.properties.text = 'Header Type 1 Text';
-            break;
-          case 'HeaderType2':
-            newItem.properties.text = 'Header Type 2 Text';
-            break;
-          case 'HeaderType3':
-            newItem.properties.text = 'Header Type 3 Text';
-            break;
-          case 'Footer':
-            newItem.properties.text = 'Footer Text';
-            break;
-          case 'Button':
-            newItem.properties.text = 'Click Me';
-            newItem.style = { ...newItem.style, backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' };
-            break;
-          case 'Card':
-            newItem.properties.title = 'Card Title';
-            newItem.properties.content = 'This is the card content.';
-            newItem.style = { ...newItem.style, border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#f9f9f9' };
-            break;
-          default:
-            // 동적 컴포넌트의 경우 properties.text를 따로 설정하지 않을 수 있습니다.
-            // newItem.properties.text = type;
-            break;
-        }
         state.items.push(newItem);
       }),
+  deleteItem: (itemId) =>
+      set((state) => ({
+        items: state.items.filter((item) => item.id !== itemId),
+        // 만약 삭제된 아이템이 현재 선택된 아이템이라면, 선택 상태를 해제합니다.
+        selectedItemId: state.selectedItemId === itemId ? null : state.selectedItemId,
+      })),
 
   selectItem: (id) =>
       set((state) => {
@@ -70,7 +44,6 @@ const useBuilderStore = create(immer((set, get) => ({
         }
       }),
 
-  // moveItem 함수가 정확히 이 위치에 이 형태로 존재해야 합니다.
   moveItem: (oldIndex, newIndex) => {
     set((state) => {
       console.log('Zustand: Attempting to move item in store.', { oldIndex, newIndex, currentItems: state.items });
@@ -78,16 +51,7 @@ const useBuilderStore = create(immer((set, get) => ({
       state.items.splice(newIndex, 0, movedItem);
       console.log('Zustand: Items after move:', state.items);
     });
-  }, // <-- 이 쉼표(,)가 빠지면 뒤에 함수들이 인식이 안 될 수 있습니다.
-
-  // deleteItem, saveLayout, loadLayout 함수도 이 부분에 있어야 합니다.
-  deleteItem: (id) =>
-      set((state) => {
-        state.items = state.items.filter((i) => i.id !== id);
-        if (state.selectedItemId === id) {
-          state.selectedItemId = null;
-        }
-      }),
+  },
 
   saveLayout: () => {
     const { items: currentItems } = get();
@@ -122,6 +86,19 @@ const useBuilderStore = create(immer((set, get) => ({
       alert('Error loading layout.');
     }
   },
+  updateItemStyle: (itemId, newStyles) =>
+    set(
+        produce((draft) => {
+          const item = draft.items.find((i) => i.id === itemId);
+          if (item) {
+            // 기존 스타일 객체가 없으면 생성하고, 새로운 스타일을 병합합니다.
+            if (!item.styles) {
+              item.styles = {};
+            }
+            item.styles = { ...item.styles, ...newStyles };
+          }
+        })
+    ),
 })));
 
 export default useBuilderStore;

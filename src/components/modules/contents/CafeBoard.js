@@ -13,7 +13,7 @@ const CafeBoard = () => {
   ];
 
   return (
-    <div className="table-responsive">
+    <div className="cafe-board-container">
       <table className="table table-striped">
         <thead>
           <tr>
