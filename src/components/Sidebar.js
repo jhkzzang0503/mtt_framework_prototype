@@ -1,19 +1,32 @@
-// src/components/Sidebar.js (가정)
+// src/components/Sidebar.js
 import React from 'react';
-import DraggableModule from './DraggableModule'; // DraggableModule 임포트
+import getModules from '../utils/getModules';
+import DraggableModule from './DraggableModule';
 
-function Sidebar() {
+const Sidebar = () => {
+  const modules = getModules(); // modules는 { id, name, component(JSX) } 형태
+
   return (
-      <div className="sidebar" style={{ width: '280px', borderRight: '1px solid rgb(221, 221, 221)', padding: '15px', backgroundColor: 'rgb(249, 249, 249)', overflowY: 'auto', height: 'calc(-120px + 100vh)' }}>
-        <div>
-          <h4>Components</h4>
-          <DraggableModule type="Header">Header Module</DraggableModule>
-          <DraggableModule type="Footer">Footer Module</DraggableModule>
-          <DraggableModule type="Button">Button Module</DraggableModule>
-          <DraggableModule type="Card">Card Module</DraggableModule>
-        </div>
+      <div className="sidebar">
+        {modules.map((module) => (
+            <DraggableModule
+                key={module.id}
+                id={`sidebar-draggable-${module.id}`}
+                type={module.name}
+                renderComponent={module.component} // getModules에서 제공하는 실제 JSX 엘리먼트를 전달
+            >
+              {/* 사이드바에 표시될 미리보기 내용 */}
+              <div style={{ width: '100%', border: '1px solid #ddd', overflow: 'hidden', padding: '5px' }}>
+                {/* 여기서는 module.component를 그대로 렌더링하여 미리보기를 보여줍니다. */}
+                {module.component}
+              </div>
+              <h3 style={{fontSize: '1em', margin: '5px 0'}}>
+                {module.name.split('/').pop()} {/* 이름만 깔끔하게 표시 */}
+              </h3>
+            </DraggableModule>
+        ))}
       </div>
   );
-}
+};
 
 export default Sidebar;

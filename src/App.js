@@ -6,12 +6,8 @@ import Sidebar from './components/Sidebar';
 import BuilderCanvas from './components/BuilderCanvas';
 import Footer from './components/Footer';
 
-// DndContext 관련 임포트: 아래 두 줄 중 하나만 남기고 다른 하나는 삭제 또는 주석 처리합니다.
-// 필요한 모든 요소를 한 줄에서 임포트하는 것이 좋습니다.
-import { DndContext, closestCenter, closestCorners, rectIntersection, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'; // 이 줄을 유지합니다.
-
-// import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'; // 이 줄을 제거합니다. (중복)
-import useBuilderStore from './store'; // store.js에서 addItem 액션을 사용하기 위해 임포트
+import { DndContext, rectIntersection, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import useBuilderStore from './store';
 
 function App() {
     const { addItem, moveItem, items } = useBuilderStore();
@@ -19,7 +15,7 @@ function App() {
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 8, // 드래그 시작을 위한 최소 이동 거리 (픽셀)
+                distance: 8,
             },
         })
     );
@@ -27,25 +23,43 @@ function App() {
     const handleDragEnd = (event) => {
         const { active, over } = event;
 
+        console.log('Drag ended. Active:', active);
+        console.log('Drag ended. Over:', over);
+        console.log('Debug: type of moveItem:', typeof moveItem); // <-- 이 로그를 추가합니다.
+        console.log('Debug: moveItem function itself:', moveItem); // <-- 이 로그도 추가합니다.
+
         // 사이드바에서 캔버스로 새 모듈을 드롭하는 경우
-        if (active.data.current && active.data.current.isSidebarModule && over && over.id === 'canvas') {
+        if (active.data.current?.isSidebarModule && over?.id === 'canvas') {
             const type = active.data.current.type;
-            addItem(type); // 새로운 아이템을 캔버스에 추가
+            const componentToRender = active.data.current.renderedComponent;
+            const defaultProperties = active.data.current.defaultProperties;
+
+            addItem({ type, renderedComponent: componentToRender, properties: defaultProperties });
+            console.log(`Item type ${type} dropped on canvas.`);
         }
         // 캔버스 내에서 아이템을 정렬하는 경우
-        else if (over && active.id !== over.id) {
+        else if (over && active.id !== over.id && items.some(item => item.id === active.id) && items.some(item => item.id === over.id)) {
             const oldIndex = items.findIndex((item) => item.id === active.id);
             const newIndex = items.findIndex((item) => item.id === over.id);
             if (oldIndex !== -1 && newIndex !== -1) {
-                moveItem(oldIndex, newIndex);
+                // moveItem이 함수가 아닐 경우 에러 발생
+                console.log('Attempting to move item. oldIndex:', oldIndex, 'newIndex:', newIndex); // 추가 로그
+                if (typeof moveItem === 'function') { // 안전하게 호출
+                    moveItem(oldIndex, newIndex);
+                    console.log(`Item ${active.id} moved from index ${oldIndex} to ${newIndex}.`);
+                } else {
+                    console.error("moveItem is not a function when trying to move items within canvas.");
+                }
             }
+        } else {
+            console.log("No valid drop target or no movement detected.");
         }
     };
 
     return (
         <DndContext
             sensors={sensors}
-            collisionDetection={rectIntersection} // `rectIntersection` 전략 사용 (이전 제안 반영)
+            collisionDetection={rectIntersection}
             onDragEnd={handleDragEnd}
         >
             <div className="App">

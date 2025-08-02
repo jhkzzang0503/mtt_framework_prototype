@@ -1,0 +1,319 @@
+{
+    "python_analysis": {
+        "parsed_stack_trace": []
+    },
+    "javascript_analysis": {
+        "config-overrides.js": {
+            "imports": [],
+            "exports": []
+        },
+        "src/App.js": {
+            "error": "Line 32: Unexpected token ."
+        },
+        "src/index.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "react-dom/client",
+                    "specifiers": [
+                        "ReactDOM"
+                    ]
+                },
+                {
+                    "source": "./index.css",
+                    "specifiers": []
+                },
+                {
+                    "source": "./App",
+                    "specifiers": [
+                        "App"
+                    ]
+                }
+            ],
+            "exports": []
+        },
+        "src/store.js": {
+            "imports": [
+                {
+                    "source": "zustand",
+                    "specifiers": [
+                        "create"
+                    ]
+                },
+                {
+                    "source": "zustand/middleware/immer",
+                    "specifiers": [
+                        "immer"
+                    ]
+                },
+                {
+                    "source": "uuid",
+                    "specifiers": [
+                        "uuidv4"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/BuilderCanvas.js": {
+            "error": "Line 34: Unexpected token ."
+        },
+        "src/components/DraggableModule.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "@dnd-kit/core",
+                    "specifiers": [
+                        "useDraggable",
+                        "DragOverlay",
+                        "useDndMonitor"
+                    ]
+                },
+                {
+                    "source": "@dnd-kit/utilities",
+                    "specifiers": [
+                        "CSS"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/Footer.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/Header.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "../store",
+                    "specifiers": [
+                        "useBuilderStore"
+                    ]
+                },
+                {
+                    "source": "./modules/header/HeaderComponent",
+                    "specifiers": [
+                        "HeaderComponent"
+                    ]
+                },
+                {
+                    "source": "./modules/header/HeaderType1",
+                    "specifiers": [
+                        "HeaderType1"
+                    ]
+                },
+                {
+                    "source": "./modules/header/HeaderType2",
+                    "specifiers": [
+                        "HeaderType2"
+                    ]
+                },
+                {
+                    "source": "./modules/header/HeaderType3",
+                    "specifiers": [
+                        "HeaderType3"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/Sidebar.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "../utils/getModules",
+                    "specifiers": [
+                        "getModules"
+                    ]
+                },
+                {
+                    "source": "./DraggableModule",
+                    "specifiers": [
+                        "DraggableModule"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/SortableItem.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "@dnd-kit/sortable",
+                    "specifiers": [
+                        "useSortable"
+                    ]
+                },
+                {
+                    "source": "@dnd-kit/utilities",
+                    "specifiers": [
+                        "CSS"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/modules/header/HeaderComponent.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/modules/header/HeaderType1.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/modules/header/HeaderType2.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/components/modules/header/HeaderType3.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                },
+                {
+                    "source": "html2canvas",
+                    "specifiers": [
+                        "html2canvas"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "src/utils/commonModule.js": {
+            "imports": [],
+            "exports": [
+                {
+                    "type": "named",
+                    "specifiers": []
+                }
+            ]
+        },
+        "src/utils/getModules.js": {
+            "imports": [
+                {
+                    "source": "react",
+                    "specifiers": [
+                        "React"
+                    ]
+                }
+            ],
+            "exports": [
+                {
+                    "type": "default",
+                    "name": "Anonymous"
+                }
+            ]
+        },
+        "overall_error": "JavaScript 프로젝트 분석 중 오류가 발견되었습니다. 이 에러들을 수정해야 다음 단계 진행이 가능합니다:\n- src/App.js: Line 32: Unexpected token .\n- src/components/BuilderCanvas.js: Line 34: Unexpected token .",
+        "parsed_stack_trace": []
+    },
+    "overall_error_detected": true,
+    "overall_message": "프로젝트 분석 완료 (오류 포함). 다음 작업을 확인해주세요."
+}
