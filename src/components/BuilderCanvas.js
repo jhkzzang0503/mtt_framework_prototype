@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useDroppable, useDndMonitor } from '@dnd-kit/core';
-import useBuilderStore from '../store';
-import SortableItem from './SortableItem';
+import useBuilderStore from '@/store';
+import SortableItem from '@/components/SortableItem';
 
 const BuilderCanvas = () => {
     const { items, addItem, selectItem, selectedItemId } = useBuilderStore();
@@ -76,6 +76,8 @@ const BuilderCanvas = () => {
             file_path: fullFilePath,
             file_content: fileContent,
         }));
+
+        console.log("fileContent : ", fileContent);
 
         setModalOpen(false);
     };

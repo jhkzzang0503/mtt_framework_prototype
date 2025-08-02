@@ -26,18 +26,17 @@
 
 /* Builder Canvas Styles */
 .builder-canvas {
-  flex: 1;
+  flex: 1 1;
   padding: 20px;
-  border-left: 1px solid #ccc; /* 이 스타일이 인라인으로 오버라이드될 수 있으므로 주의 */
+  border-left: 1px solid #ccc;
   min-height: 80vh;
-  background-color: #f8f8f8; /* 이 스타일이 인라인으로 오버라이드될 수 있으므로 주의 */
+  background-color: #f8f8f8;
   box-sizing: border-box;
-
-  /* 드롭 영역 시각화를 위한 초기 테두리 */
-  border: 1px dashed #a0a0a0; /* 이 스타일도 인라인으로 오버라이드될 수 있으므로 주의 */
+  border: 1px dashed #a0a0a0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* 'center'에서 'stretch'로 변경 */
+  align-items: stretch;
   justify-content: flex-start;
   gap: 8px;
   overflow-y: auto;
@@ -46,7 +45,7 @@
 /* Sortable Item Styles */
 .sortable-item {
   width: 100%; /* SortableItem이 builder-canvas의 너비를 채우도록 */
-  max-width: 600px; /* 너무 넓어지지 않도록 최대 너비 설정 (선택 사항) */
+  /* max-width: 600px; /* 너무 넓어지지 않도록 최대 너비 설정 (선택 사항) */
   padding: 10px;
   background-color: white;
   border: 1px solid #ddd;
