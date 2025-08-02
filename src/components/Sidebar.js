@@ -13,6 +13,7 @@ const Sidebar = () => {
                 key={module.id}
                 id={`sidebar-draggable-${module.id}`}
                 type={module.name}
+                path={module.path}
                 renderComponent={module.component} // getModules에서 제공하는 실제 JSX 엘리먼트를 전달
             >
               {/* 사이드바에 표시될 미리보기 내용 */}

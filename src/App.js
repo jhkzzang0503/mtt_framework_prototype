@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import BuilderCanvas from './components/BuilderCanvas';
 import Footer from './components/Footer';
+import TestForm from '@/components/modules/tryjyj'
 
 import { DndContext, rectIntersection, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import useBuilderStore from './store';
@@ -62,13 +63,14 @@ function App() {
             collisionDetection={rectIntersection}
             onDragEnd={handleDragEnd}
         >
+            <TestForm/>
             <div className="App">
-                <Header />
+                <Header/>
                 <div className="main-content">
-                    <Sidebar />
-                    <BuilderCanvas />
+                    <Sidebar/>
+                    <BuilderCanvas/>
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         </DndContext>
     );
