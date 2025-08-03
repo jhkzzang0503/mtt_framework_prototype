@@ -123,7 +123,7 @@ const ModulesSet = ({ selectedModule, onStyleChange }) => {
         )}
         {modalOpen && (
             <div className="modal-overlay"> {/* 모달 오버레이에 클래스 추가 */}
-              <div className="modal-content"> {/* 모달 콘텐츠에 클래스 추가 */}
+              <div className="modal-content" style={{background: "var(--bs-body-bg)"}}> {/* 모달 콘텐츠에 클래스 추가 */}
                 <input type="text" value={filePath} onChange={e => setFilePath(e.target.value)}
                        placeholder="경로 (예: components/generated)" className="modal-input"/><br/> {/* 입력 필드에 클래스 추가 */}
                 <input type="text" value={fileName} onChange={e => setFileName(e.target.value)}
