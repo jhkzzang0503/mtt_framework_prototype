@@ -1,40 +1,61 @@
 import React from 'react';
-import getModules from '../utils/getModules';
-import DraggableModule from './DraggableModule';
 
 const Sidebar = () => {
-    const modules = getModules();
-
     return (
-        // [수정] col-md-3와 sidebar-panel 클래스를 함께 적용
-        <div className="sidebar-panel h-100 p-3 bg-light border-end d-flex flex-column"
-             style={{overflowY: 'auto'}}>
-            {Object.entries(modules).map(([categoryName, categoryModules]) => (
-                <div key={categoryName}>
-                    <h3 className="sidebar-category-title">{categoryName}</h3>
-
-                    <div className="module-grid">
-                        {categoryModules.map((module) => (
-                            <DraggableModule
-                                key={module.id}
-                                id={`sidebar-draggable-${module.id}`}
-                                type={module.name}
-                                path={module.path}
-                                renderComponent={module.component}
-                            >
-                                <div className="module-preview-card">
-                                    <div className="preview-content-wrapper">
-                                        <div className="preview-content">
-                                            {module.component}
-                                        </div>
-                                    </div>
-                                    <div className="preview-title">{module.name}</div>
-                                </div>
-                            </DraggableModule>
-                        ))}
-                    </div>
-                </div>
-            ))}
+        <div className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark vh-100">
+            <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <svg className="bi me-2" width="40" height="32"></svg>
+                <span className="fs-4">Home</span>
+            </a>
+            <hr/>
+            <ul className="nav nav-pills flex-column mb-auto">
+                <li className="nav-item"><a href="#" className="nav-link active" aria-current="page">
+                    <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+                        <use href="/"></use>
+                    </svg>
+                    Home
+                </a></li>
+                <li><a href="#" className="nav-link text-white">
+                    <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+                        <use href="/"></use>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="#" className="nav-link text-white">
+                    <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+                        <use href="/"></use>
+                    </svg>
+                    Orders
+                </a></li>
+                <li><a href="#" className="nav-link text-white">
+                    <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+                        <use href="/"></use>
+                    </svg>
+                    Products
+                </a></li>
+                <li><a href="#" className="nav-link text-white">
+                    <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+                        <use href="/"></use>
+                    </svg>
+                    Customers
+                </a></li>
+            </ul>
+            <div className="dropdown">
+                <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                         className="rounded-circle me-2"/>
+                    <strong>장호근</strong> </a>
+                <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a className="dropdown-item" href="#">New project...</a></li>
+                    <li><a className="dropdown-item" href="#">Settings</a></li>
+                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr className="dropdown-divider"/>
+                    </li>
+                    <li><a className="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
         </div>
     );
 };

@@ -17,6 +17,12 @@ body {
 /* App 컴포넌트의 d-flex flex-column min-vh-100에 맞도록 추가 */
 #root, html, body, .App {
   height: 100%; /* HTML, body, root, App이 모두 100% 높이를 갖도록 */
+  overflow: hidden; /* 이 부분이 중요합니다 */
+}
+
+/* 화면 높이 100%를 정확히 사용하도록 vh-100 클래스 정의 */
+.vh-100 {
+  height: 100vh;
 }
 
 .main-content {

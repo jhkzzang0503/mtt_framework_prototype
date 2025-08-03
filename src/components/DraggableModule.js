@@ -3,8 +3,7 @@ import React from 'react';
 import { useDraggable, DragOverlay, useDndMonitor } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
-function DraggableModule({ type, children, id, renderComponent }) { // renderComponent prop 추가
-                                                                    // const sourceCode = `<${type} />`; // 더 이상 문자열 sourceCode를 직접 생성하지 않습니다.
+function DraggableModule({ type, children, id, renderComponent }) {
 
   // useDraggable에 전달할 data 객체
   const dataToPass = {
